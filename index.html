@@ -794,7 +794,7 @@
         <!-- Quote Verse -->
         <section id="quote">
             <div class="quote-box animate__animated">
-                <p class="arabic-text">وَمِنْ آيَاتِهِ أَنْ خَلَقَ لَكُم مِّنْ أَنfُسِكُمْ أَزْوَاجًا لِّتَسْكُنُوا إِلَيْهَا وَجَعَلَ بَيْنَكُم مَّوَدَّةً وَرَحْمَةً</p>
+                <p class="arabic-text">وَمِنْ آيَاتِهِ أَنْ خَلَقَ لَكُم مِّنْ أَنفُسِكُمْ أَزْوَاجًا لِّتَسْكُنُوا إِلَيْهَا وَجَعَلَ بَيْنَكُم مَّوَدَّةً وَرَحْمَةً</p>
                 <p class="translation-text">
                     "Dan di antara tanda-tanda yang membuktikan kekuasaan-Nya dan rahmat-Nya, bahawa Ia menciptakan untuk kamu, isteri-isteri dari jenis kamu sendiri, supaya kamu bersenang hati dan hidup mesra dengannya, dan dijadikan-Nya di antara kamu perasaan kasih sayang dan belas kasihan."
                 </p>
@@ -1041,7 +1041,7 @@
         import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-analytics.js";
         import { getFirestore, collection, addDoc, onSnapshot, query, orderBy, limit } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
-        // Your validated web app's Firebase configuration
+        // Firebase configuration
         const firebaseConfig = {
             apiKey: "AIzaSyAguK5f7xQLpJ2feZ94YxW5Zexfc9A3pbk",
             authDomain: "hanis-azizi-wedding.firebaseapp.com",
@@ -1114,7 +1114,7 @@
             try {
                 window.showToastNotification('Menghantar ucapan ke pelayan awan...');
                 
-                // Add record directly to collection matching production standard rules
+                // Add record directly to wishes collection
                 await addDoc(wishesRef, {
                     name: name,
                     message: message,
