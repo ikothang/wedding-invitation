@@ -621,17 +621,6 @@
             font-size: 0.95rem;
         }
 
-        .wish-badge {
-            display: inline-block;
-            font-size: 0.75rem;
-            padding: 2px 8px;
-            border-radius: 10px;
-            font-weight: 600;
-            margin-bottom: 10px;
-            background-color: #e2ece9;
-            color: #2e7d32;
-        }
-
         .wish-message {
             font-size: 0.88rem;
             color: #555;
@@ -859,7 +848,7 @@
         <!-- Quote / Al-Quran Section -->
         <section id="quote">
             <div class="quote-box animate__animated">
-                <p class="arabic-text">وَمِنْ آيَاتِهِ أَنْ خَلَقَ لَكُم مِّنْ أَنفُسِكُمْ أَزْوَاجًا لِّتَسْكُنُوا إِلَيْهَا وَجَعَلَ بَيْنَكُم مَّوَدَّةً وَرَحْمَةً</p>
+                <p class="arabic-text">وَمِنْ آيَاتِهِ أَنْ خَلَقَ لَكُم مِّنْ أَنفُسِكُمْ أَزْوَاجًا Lِّتَسْكُنُوا إِلَيْهَا وَجَعَلَ بَيْنَكُم مَّوَدَّةً وَرَحْمَةً</p>
                 <p class="translation-text">
                     "Dan di antara tanda-tanda yang membuktikan kekuasaan-Nya dan rahmat-Nya, bahawa Ia menciptakan untuk kamu, isteri-isteri dari jenis kamu sendiri, supaya kamu bersenang hati dan hidup mesra dengannya, dan dijadikan-Nya di antara kamu perasaan kasih sayang dan belas kasihan."
                 </p>
@@ -1253,18 +1242,18 @@
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-        import { getAuth, signInAnonymously } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getAuth, signInAnonymously, signInWithCustomToken } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
         import { getFirestore, collection, addDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
-        // Global Configuration provided by Canvas runtime or defaults
-        const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-hanis-azizi';
+        // Global Configuration provided by Canvas runtime or fallback to your project ID
+        const appId = typeof __app_id !== 'undefined' ? __app_id : 'hanis-azizi-wedding';
         const firebaseConfig = typeof __firebase_config !== 'undefined' 
             ? JSON.parse(__firebase_config) 
             : {
                 apiKey: "mock-api-key-for-preview",
-                authDomain: "mock-auth-domain.firebaseapp.com",
-                projectId: "mock-project-id",
-                storageBucket: "mock-storage-bucket.appspot.com",
+                authDomain: "hanis-azizi-wedding.firebaseapp.com",
+                projectId: "hanis-azizi-wedding",
+                storageBucket: "hanis-azizi-wedding.appspot.com",
                 messagingSenderId: "mock-sender-id",
                 appId: "mock-app-id"
               };
@@ -1297,9 +1286,21 @@
         async function startDatabase() {
             if (isFirebaseActive) {
                 try {
+                    let user;
                     // RULE 3: Auth before any query
-                    await signInAnonymously(auth);
-                    listenToLiveWishes();
+                    if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
+                        const credentials = await signInWithCustomToken(auth, __initial_auth_token);
+                        user = credentials.user;
+                    } else {
+                        const credentials = await signInAnonymously(auth);
+                        user = credentials.user;
+                    }
+
+                    if (user) {
+                        listenToLiveWishes();
+                    } else {
+                        loadLocalWishes();
+                    }
                 } catch (e) {
                     console.error("Gagal log masuk secara tanpa nama (Firebase Auth):", e);
                     loadLocalWishes();
@@ -1352,7 +1353,6 @@
                 card.className = 'wish-card animate__animated animate__fadeIn';
                 card.innerHTML = `
                     <p class="wish-name">${escapeHTML(wish.name)}</p>
-                    <span class="wish-badge"><i class="fa-solid fa-heart" style="color: #e28743;"></i> Ucapan Kasih</span>
                     <p class="wish-message">${escapeHTML(wish.message)}</p>
                 `;
                 board.appendChild(card);
