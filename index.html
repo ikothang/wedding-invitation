@@ -484,20 +484,40 @@
             color: var(--charcoal);
         }
 
-        /* Interactivity: RSVP & Guestbook */
-        #rsvp {
+        /* Success & Floating Notifications */
+        .notification {
+            position: fixed;
+            bottom: 30px;
+            right: -350px;
+            background-color: var(--leaf-green);
+            color: white;
+            padding: 15px 25px;
+            border-radius: 8px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+            z-index: 1000;
+            transition: right 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .notification.show {
+            right: 30px;
+        }
+
+        /* Guestbook Board */
+        #guestbook {
             background-color: var(--primary-floral);
         }
 
-        .rsvp-card {
-            background: white;
-            border-radius: 20px;
-            padding: 40px;
+        .guestbook-form {
             max-width: 600px;
-            margin: 0 auto;
-            box-shadow: 0 15px 40px var(--shadow-medium);
-            border: 1px solid rgba(212, 175, 55, 0.2);
-            position: relative;
+            margin: 0 auto 50px auto;
+            background: #ffffff;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 8px 20px var(--shadow-light);
+            border: 1px solid rgba(212, 175, 55, 0.1);
         }
 
         .form-group {
@@ -530,24 +550,6 @@
             box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.15);
         }
 
-        .radio-group {
-            display: flex;
-            gap: 20px;
-            margin-top: 10px;
-        }
-
-        .radio-option {
-            display: flex;
-            align-items: center;
-            cursor: pointer;
-        }
-
-        .radio-option input {
-            margin-right: 8px;
-            accent-color: var(--leaf-green);
-            transform: scale(1.2);
-        }
-
         .btn-submit {
             background-color: var(--leaf-green);
             color: white;
@@ -565,42 +567,6 @@
         .btn-submit:hover {
             background-color: var(--charcoal);
             transform: translateY(-2px);
-        }
-
-        /* Success & Floating Notifications */
-        .notification {
-            position: fixed;
-            bottom: 30px;
-            right: -350px;
-            background-color: var(--leaf-green);
-            color: white;
-            padding: 15px 25px;
-            border-radius: 8px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
-            z-index: 1000;
-            transition: right 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55);
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .notification.show {
-            right: 30px;
-        }
-
-        /* Guestbook Board */
-        #guestbook {
-            background-color: white;
-        }
-
-        .guestbook-form {
-            max-width: 600px;
-            margin: 0 auto 50px auto;
-            background: var(--primary-floral);
-            padding: 30px;
-            border-radius: 15px;
-            box-shadow: 0 8px 20px var(--shadow-light);
-            border: 1px solid rgba(212, 175, 55, 0.1);
         }
 
         .wishes-container {
@@ -655,23 +621,15 @@
             font-size: 0.95rem;
         }
 
-        .wish-attendance {
+        .wish-badge {
             display: inline-block;
             font-size: 0.75rem;
             padding: 2px 8px;
             border-radius: 10px;
             font-weight: 600;
             margin-bottom: 10px;
-        }
-
-        .wish-attendance.attend {
             background-color: #e2ece9;
             color: #2e7d32;
-        }
-
-        .wish-attendance.not-attend {
-            background-color: #ffebee;
-            color: #c62828;
         }
 
         .wish-message {
@@ -682,7 +640,7 @@
 
         /* Map & Directions Section */
         #location {
-            background-color: var(--primary-floral);
+            background-color: white;
         }
 
         .location-info {
@@ -722,7 +680,7 @@
 
         /* Gift & Panduan Pakaian Section */
         #gift-dress {
-            background-color: #ffffff;
+            background-color: var(--primary-floral);
         }
 
         .grid-single {
@@ -731,7 +689,7 @@
         }
 
         .grid-card {
-            background: var(--primary-floral);
+            background: white;
             border-radius: 15px;
             padding: 40px 30px;
             border: 1px solid rgba(212, 175, 55, 0.15);
@@ -855,13 +813,11 @@
 <body>
 
     <!-- Ambient SVG Floral backgrounds -->
-    <!-- Top Left Leaves SVG -->
     <svg class="floral-bg-top-left" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
         <path d="M 0,0 C 30,10 60,0 70,30 C 50,40 20,20 0,0 Z" fill="#5f7461"/>
         <path d="M 0,20 C 40,40 40,70 10,80 C 10,50 10,30 0,20 Z" fill="#5f7461" opacity="0.7"/>
         <path d="M 20,0 C 50,30 80,20 90,50 C 60,60 40,30 20,0 Z" fill="#b28d2f" opacity="0.5"/>
     </svg>
-    <!-- Bottom Right Leaves SVG -->
     <svg class="floral-bg-bottom-right" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
         <path d="M 0,0 C 30,10 60,0 70,30 C 50,40 20,20 0,0 Z" fill="#5f7461"/>
         <path d="M 0,20 C 40,40 40,70 10,80 C 10,50 10,30 0,20 Z" fill="#5f7461" opacity="0.7"/>
@@ -903,7 +859,7 @@
         <!-- Quote / Al-Quran Section -->
         <section id="quote">
             <div class="quote-box animate__animated">
-                <p class="arabic-text">وَمِنْ آيَاتِهِ أَنْ خَلَقَ لَكُم مِّن| أَنfُسِكُم| أَز|وَاجًا لِّتَس|كُنُوا إِلَي|هَا وَجَعَلَ بَي|نَكُم mَّوَدَّةً وَرَح|مَةً</p>
+                <p class="arabic-text">وَمِنْ آيَاتِهِ أَنْ خَلَقَ لَكُم مِّنْ أَنفُسِكُمْ أَزْوَاجًا لِّتَسْكُنُوا إِلَيْهَا وَجَعَلَ بَيْنَكُم مَّوَدَّةً وَرَحْمَةً</p>
                 <p class="translation-text">
                     "Dan di antara tanda-tanda yang membuktikan kekuasaan-Nya dan rahmat-Nya, bahawa Ia menciptakan untuk kamu, isteri-isteri dari jenis kamu sendiri, supaya kamu bersenang hati dan hidup mesra dengannya, dan dijadikan-Nya di antara kamu perasaan kasih sayang dan belas kasihan."
                 </p>
@@ -1029,58 +985,10 @@
             </div>
         </section>
 
-        <!-- RSVP Interaktif -->
-        <section id="rsvp">
-            <p style="letter-spacing: 2px; text-transform: uppercase; font-size: 0.9rem; color: var(--leaf-green); font-weight:600;">Sahkan Kehadiran</p>
-            <h2 style="font-size: 2.2rem; color: var(--charcoal); margin-top: 10px;">Kehadiran Anda Pengubah Suasana</h2>
-            <div class="section-divider"></div>
-
-            <div class="rsvp-card">
-                <form id="rsvpForm" onsubmit="submitRSVP(event)">
-                    <div class="form-group">
-                        <label for="rsvpName">Nama Penuh</label>
-                        <input type="text" id="rsvpName" class="form-control" placeholder="Masukkan nama anda" required>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="rsvpPhone">Nombor Telefon</label>
-                        <input type="tel" id="rsvpPhone" class="form-control" placeholder="Contoh: 0123456789" required>
-                    </div>
-
-                    <div class="form-group">
-                        <label>Siri Kehadiran</label>
-                        <div class="radio-group">
-                            <label class="radio-option">
-                                <input type="radio" name="attendance" value="Hadir" checked onclick="togglePax(true)">
-                                Hadir
-                            </label>
-                            <label class="radio-option">
-                                <input type="radio" name="attendance" value="Tidak Hadir" onclick="togglePax(false)">
-                                Tidak Hadir
-                            </label>
-                        </div>
-                    </div>
-
-                    <div class="form-group" id="paxGroup">
-                        <label for="rsvpPax">Jumlah Tetamu (Termasuk Anda)</label>
-                        <select id="rsvpPax" class="form-control">
-                            <option value="1">1 Orang</option>
-                            <option value="2">2 Orang</option>
-                            <option value="3">3 Orang</option>
-                            <option value="4">4 Orang</option>
-                            <option value="5">5 Orang</option>
-                        </select>
-                    </div>
-
-                    <button type="submit" class="btn-submit">Hantar Pengesahan</button>
-                </form>
-            </div>
-        </section>
-
-        <!-- Guestbook / Ucapan Interaktif -->
+        <!-- Guestbook / Ucapan Interaktif Awam -->
         <section id="guestbook">
             <p style="letter-spacing: 2px; text-transform: uppercase; font-size: 0.9rem; color: var(--leaf-green); font-weight:600;">Buku Ucapan</p>
-            <h2 style="font-size: 2.2rem; color: var(--charcoal); margin-top: 10px;">Ucapan & Doa Restu</h2>
+            <h2 style="font-size: 2.2rem; color: var(--charcoal); margin-top: 10px;">Ucapan & Doa Restu Live</h2>
             <div class="section-divider"></div>
 
             <div class="guestbook-form">
@@ -1099,20 +1007,9 @@
 
             <!-- Wishes Scroll Board -->
             <div class="wishes-container" id="wishesBoard">
-                <div class="wish-card">
-                    <p class="wish-name">Datuk Ahmad Shah</p>
-                    <span class="wish-attendance attend">Hadir</span>
-                    <p class="wish-message">Selamat pengantin baru Hanis & Azizi! Moga dibina mahligai yang sakinah, mawaddah, warahmah.</p>
-                </div>
-                <div class="wish-card">
-                    <p class="wish-name">Sofea Amalin</p>
-                    <span class="wish-attendance attend">Hadir</span>
-                    <p class="wish-message">Sama cantik, sama padan. Moga cinta berpanjangan hingga ke anak cucu!</p>
-                </div>
-                <div class="wish-card">
-                    <p class="wish-name">Khairul Anwar</p>
-                    <span class="wish-attendance not-attend">Tidak Hadir</span>
-                    <p class="wish-message">Maaf tak dapat datang sebab luar kawasan, tapi doa kami sekeluarga sentiasa bersama kalian.</p>
+                <!-- Ucapan akan dimuatkan dari pangkalan data Firestore di sini -->
+                <div class="wish-card" style="grid-column: 1 / -1; text-align: center;">
+                    <p style="color: #888;"><i class="fa-solid fa-spinner fa-spin"></i> Memuatkan ucapan terkini...</p>
                 </div>
             </div>
         </section>
@@ -1146,7 +1043,6 @@
             <div class="section-divider"></div>
 
             <div class="grid-single">
-                <!-- Dress Code -->
                 <div class="grid-card">
                     <div style="font-size: 2.2rem; color: var(--leaf-green); margin-bottom: 15px;"><i class="fa-solid fa-shirt"></i></div>
                     <h3>Tema Pakaian</h3>
@@ -1180,7 +1076,7 @@
                 <i class="fa-regular fa-circle-check"></i>
             </div>
             <h3 id="modalTitle" style="font-size: 1.5rem; color: var(--charcoal);">Terima Kasih!</h3>
-            <p id="modalBody" style="color: #666; margin-top: 10px;">Pengesahan kehadiran anda telah selamat dihantar.</p>
+            <p id="modalBody" style="color: #666; margin-top: 10px;">Ucapan anda telah selamat disimpan.</p>
             <button class="btn-close-modal" onclick="closeModal()">Tutup</button>
         </div>
     </div>
@@ -1273,16 +1169,6 @@
             startYouTubeMusic();
         }
 
-        // Toggle Pax dropdown based on attendance
-        function togglePax(isPresent) {
-            const paxGroup = document.getElementById('paxGroup');
-            if (isPresent) {
-                paxGroup.style.display = 'block';
-            } else {
-                paxGroup.style.display = 'none';
-            }
-        }
-
         // Custom Modal Functions
         function showModal(title, text) {
             document.getElementById('modalTitle').innerText = title;
@@ -1310,68 +1196,6 @@
             setTimeout(() => {
                 toast.classList.remove('show');
             }, 3000);
-        }
-
-        // Submit RSVP
-        function submitRSVP(event) {
-            event.preventDefault();
-            const name = document.getElementById('rsvpName').value;
-            const phone = document.getElementById('rsvpPhone').value;
-            const attendance = document.querySelector('input[name="attendance"]:checked').value;
-            const pax = document.getElementById('rsvpPax').value;
-
-            let detailsMsg = '';
-            if (attendance === 'Hadir') {
-                detailsMsg = `Terima kasih ${name}! Kehadiran seramai ${pax} orang telah kami catatkan. Jumpa nanti!`;
-            } else {
-                detailsMsg = `Terima kasih ${name} atas maklum balas anda. Kami menghargai ucapan dan doa anda.`;
-            }
-
-            // Show custom elegant modal
-            showModal('Pengesahan Berjaya!', detailsMsg);
-
-            // Add dynamic wish to the board based on RSVP
-            addWishToBoard(name, attendance, attendance === 'Hadir' ? 'Selamat Pengantin Baru! Kami gembira dapat meraikan hari bermakna ini bersama.' : 'Selamat pengantin baru Hanis & Azizi! Moga bahagia hingga ke syurga.');
-
-            // Reset form
-            document.getElementById('rsvpForm').reset();
-            togglePax(true);
-        }
-
-        // Submit Wish
-        function submitWish(event) {
-            event.preventDefault();
-            const name = document.getElementById('wishName').value;
-            const msg = document.getElementById('wishMessage').value;
-
-            addWishToBoard(name, 'Hadir', msg);
-
-            showToast('Ucapan anda berjaya dihantar ke buku ucapan!');
-            
-            // Reset form
-            document.getElementById('wishForm').reset();
-        }
-
-        // Helper to dynamic insert wish card
-        function addWishToBoard(name, attendance, message) {
-            const board = document.getElementById('wishesBoard');
-            const card = document.createElement('div');
-            card.className = 'wish-card animate__animated animate__fadeInUp';
-            
-            const isAttending = attendance === 'Hadir';
-            const attClass = isAttending ? 'attend' : 'not-attend';
-            const attText = isAttending ? 'Hadir' : 'Tidak Hadir';
-
-            card.innerHTML = `
-                <p class="wish-name">${name}</p>
-                <span class="wish-attendance ${attClass}">${attText}</span>
-                <p class="wish-message">${message}</p>
-            `;
-            // Insert at the top of board
-            board.insertBefore(card, board.firstChild);
-            
-            // Scroll to the top of board slowly
-            board.scrollTop = 0;
         }
 
         // Countdown Timer: Set Wedding Date to 14 November 2026
@@ -1416,10 +1240,179 @@
             });
         }, observerOptions);
 
-        document.querySelectorAll('.detail-item, .profile-card, .timeline-event, .rsvp-card, .grid-card').forEach(item => {
+        document.querySelectorAll('.detail-item, .profile-card, .timeline-event, .grid-card').forEach(item => {
             item.classList.add('animate__animated');
             observer.observe(item);
         });
+
+        // Make functions globally accessible so inline HTML click event listeners can trigger them
+        window.openInvitation = openInvitation;
+        window.toggleMusic = toggleMusic;
+        window.closeModal = closeModal;
+    </script>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getAuth, signInAnonymously } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getFirestore, collection, addDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+        // Global Configuration provided by Canvas runtime or defaults
+        const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-hanis-azizi';
+        const firebaseConfig = typeof __firebase_config !== 'undefined' 
+            ? JSON.parse(__firebase_config) 
+            : {
+                apiKey: "mock-api-key-for-preview",
+                authDomain: "mock-auth-domain.firebaseapp.com",
+                projectId: "mock-project-id",
+                storageBucket: "mock-storage-bucket.appspot.com",
+                messagingSenderId: "mock-sender-id",
+                appId: "mock-app-id"
+              };
+
+        let db;
+        let auth;
+        let isFirebaseActive = false;
+        let wishesCollectionRef;
+        let localWishesFallback = [
+            { id: "1", name: "Datuk Ahmad Shah", message: "Selamat pengantin baru Hanis & Azizi! Moga dibina mahligai yang sakinah, mawaddah, warahmah.", timestamp: Date.now() - 3600000 },
+            { id: "2", name: "Sofea Amalin", message: "Sama cantik, sama padan. Moga cinta berpanjangan hingga ke anak cucu!", timestamp: Date.now() - 7200000 },
+            { id: "3", name: "Khairul Anwar", message: "Maaf tak dapat datang sebab luar kawasan, tapi doa kami sekeluarga sentiasa bersama kalian.", timestamp: Date.now() - 10800000 }
+        ];
+
+        // Check if we have valid Firebase config
+        if (firebaseConfig.apiKey && firebaseConfig.apiKey !== "mock-api-key-for-preview") {
+            try {
+                const app = initializeApp(firebaseConfig);
+                db = getFirestore(app);
+                auth = getAuth(app);
+                isFirebaseActive = true;
+                // RULE 1: Strict collection paths
+                wishesCollectionRef = collection(db, 'artifacts', appId, 'public', 'data', 'wishes');
+            } catch (e) {
+                console.warn("Gagal memulakan Firebase. Menggunakan penyimpanan simulasi lokal:", e);
+            }
+        }
+
+        // Initialize connection
+        async function startDatabase() {
+            if (isFirebaseActive) {
+                try {
+                    // RULE 3: Auth before any query
+                    await signInAnonymously(auth);
+                    listenToLiveWishes();
+                } catch (e) {
+                    console.error("Gagal log masuk secara tanpa nama (Firebase Auth):", e);
+                    loadLocalWishes();
+                }
+            } else {
+                loadLocalWishes();
+            }
+        }
+
+        // Listen for Real-Time Updates (onSnapshot)
+        function listenToLiveWishes() {
+            if (!auth.currentUser) return;
+
+            // RULE 2: No complex queries or limits inside onSnapshot to avoid index compilation issues
+            onSnapshot(wishesCollectionRef, (snapshot) => {
+                const loadedWishes = [];
+                snapshot.forEach((doc) => {
+                    loadedWishes.push({ id: doc.id, ...doc.data() });
+                });
+
+                // Sort client-side by timestamp descending to respect RULE 2
+                loadedWishes.sort((a, b) => (b.timestamp || 0) - (a.timestamp || 0));
+                renderWishes(loadedWishes);
+            }, (error) => {
+                console.error("Firestore onSnapshot error:", error);
+                loadLocalWishes();
+            });
+        }
+
+        // Fallback to local memory display
+        function loadLocalWishes() {
+            renderWishes(localWishesFallback);
+        }
+
+        // Render Wishes cards to the board
+        function renderWishes(wishes) {
+            const board = document.getElementById('wishesBoard');
+            if (wishes.length === 0) {
+                board.innerHTML = `
+                    <div class="wish-card" style="grid-column: 1 / -1; text-align: center; padding: 40px;">
+                        <p style="color: #888;"><i class="fa-regular fa-comments" style="font-size: 2rem; margin-bottom: 10px; display: block; color: var(--accent-gold);"></i> Tiada ucapan lagi. Jadilah yang pertama memberikan ucapan restu!</p>
+                    </div>
+                `;
+                return;
+            }
+
+            board.innerHTML = '';
+            wishes.forEach((wish) => {
+                const card = document.createElement('div');
+                card.className = 'wish-card animate__animated animate__fadeIn';
+                card.innerHTML = `
+                    <p class="wish-name">${escapeHTML(wish.name)}</p>
+                    <span class="wish-badge"><i class="fa-solid fa-heart" style="color: #e28743;"></i> Ucapan Kasih</span>
+                    <p class="wish-message">${escapeHTML(wish.message)}</p>
+                `;
+                board.appendChild(card);
+            });
+        }
+
+        // Escape HTML to prevent XSS injection
+        function escapeHTML(str) {
+            if (!str) return '';
+            return str.replace(/[&<>'"]/g, 
+                tag => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' }[tag] || tag)
+            );
+        }
+
+        // Handle Form Submission of Wish
+        async function submitWish(event) {
+            event.preventDefault();
+            const nameInput = document.getElementById('wishName');
+            const messageInput = document.getElementById('wishMessage');
+
+            const name = nameInput.value.trim();
+            const message = messageInput.value.trim();
+
+            if (!name || !message) return;
+
+            const newWish = {
+                name: name,
+                message: message,
+                timestamp: Date.now()
+            };
+
+            if (isFirebaseActive && auth.currentUser) {
+                try {
+                    await addDoc(wishesCollectionRef, newWish);
+                    showToast('Ucapan anda berjaya dihantar secara live!');
+                } catch (e) {
+                    console.error("Ralat menambah ucapan ke Firestore:", e);
+                    showToast('Ralat sambungan. Ucapan disimpan sementara.');
+                    handleLocalSubmission(newWish);
+                }
+            } else {
+                handleLocalSubmission(newWish);
+            }
+
+            // Clear form
+            nameInput.value = '';
+            messageInput.value = '';
+        }
+
+        function handleLocalSubmission(wish) {
+            localWishesFallback.unshift(wish);
+            renderWishes(localWishesFallback);
+            showToast('Ucapan anda berjaya dihantar!');
+        }
+
+        // Bind submit function globally
+        window.submitWish = submitWish;
+
+        // Run Initializer
+        startDatabase();
     </script>
 </body>
 </html>
