@@ -1076,190 +1076,31 @@
         <span id="toastMsg">Tindakan Berjaya!</span>
     </div>
 
-    <script>
-        // Load YouTube Iframe Player API dynamically
-        var tag = document.createElement('script');
-        tag.src = "https://www.youtube.com/iframe_api";
-        var firstScriptTag = document.getElementsByTagName('script')[0];
-        firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
-
-        let ytPlayer;
-        let isMusicPlaying = false;
-
-        // This callback is called automatically when YouTube Iframe API is ready
-        function onYouTubeIframeAPIReady() {
-            ytPlayer = new YT.Player('yt-player', {
-                height: '1',
-                width: '1',
-                videoId: 'sBiSqt8k3U4', // YouTube Video ID from user's URL
-                playerVars: {
-                    'autoplay': 0,
-                    'controls': 0,
-                    'loop': 1,
-                    'playlist': 'sBiSqt8k3U4', // Required for looping
-                    'rel': 0,
-                    'showinfo': 0
-                },
-                events: {
-                    'onReady': onPlayerReady,
-                    'onStateChange': onPlayerStateChange
-                }
-            });
-        }
-
-        function onPlayerReady(event) {
-            // Player is initialized and ready
-        }
-
-        function onPlayerStateChange(event) {
-            const musicBtn = document.getElementById('music-control');
-            if (event.data === YT.PlayerState.PLAYING) {
-                isMusicPlaying = true;
-                musicBtn.classList.add('playing');
-            } else {
-                isMusicPlaying = false;
-                musicBtn.classList.remove('playing');
-            }
-        }
-
-        function startYouTubeMusic() {
-            if (ytPlayer && typeof ytPlayer.playVideo === 'function') {
-                ytPlayer.playVideo();
-                isMusicPlaying = true;
-                document.getElementById('music-control').classList.add('playing');
-            }
-        }
-
-        function pauseYouTubeMusic() {
-            if (ytPlayer && typeof ytPlayer.pauseVideo === 'function') {
-                ytPlayer.pauseVideo();
-                isMusicPlaying = false;
-                document.getElementById('music-control').classList.remove('playing');
-            }
-        }
-
-        function toggleMusic() {
-            if (isMusicPlaying) {
-                pauseYouTubeMusic();
-            } else {
-                startYouTubeMusic();
-            }
-        }
-
-        // Open Invitation & Play Beautiful in White
-        function openInvitation() {
-            const overlay = document.getElementById('intro-overlay');
-            overlay.classList.add('fade-out');
-            setTimeout(() => {
-                overlay.style.display = 'none';
-            }, 1000);
-            
-            // Start the YouTube cover music
-            startYouTubeMusic();
-        }
-
-        // Custom Modal Functions
-        function showModal(title, text) {
-            document.getElementById('modalTitle').innerText = title;
-            document.getElementById('modalBody').innerText = text;
-            const modal = document.getElementById('customModal');
-            modal.style.display = 'flex';
-            setTimeout(() => {
-                modal.classList.add('show');
-            }, 10);
-        }
-
-        function closeModal() {
-            const modal = document.getElementById('customModal');
-            modal.classList.remove('show');
-            setTimeout(() => {
-                modal.style.display = 'none';
-            }, 300);
-        }
-
-        // Custom Toast Notification
-        function showToast(message) {
-            const toast = document.getElementById('toast');
-            document.getElementById('toastMsg').innerText = message;
-            toast.classList.add('show');
-            setTimeout(() => {
-                toast.classList.remove('show');
-            }, 3000);
-        }
-
-        // Countdown Timer: Set Wedding Date to 14 November 2026
-        const weddingDate = new Date("Nov 14, 2026 11:00:00").getTime();
-
-        const countdownInterval = setInterval(function() {
-            const now = new Date().getTime();
-            const distance = weddingDate - now;
-
-            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
-            document.getElementById("days").innerText = days < 10 ? "0" + days : days;
-            document.getElementById("hours").innerText = hours < 10 ? "0" + hours : hours;
-            document.getElementById("minutes").innerText = minutes < 10 ? "0" + minutes : minutes;
-            document.getElementById("seconds").innerText = seconds < 10 ? "0" + seconds : seconds;
-
-            // If countdown is finished
-            if (distance < 0) {
-                clearInterval(countdownInterval);
-                document.getElementById("days").innerText = "00";
-                document.getElementById("hours").innerText = "00";
-                document.getElementById("minutes").innerText = "00";
-                document.getElementById("seconds").innerText = "00";
-                document.querySelector('.countdown-container').innerHTML = "<h3 style='color: var(--accent-gold);'>Hari Bahagia Telah Tiba!</h3>";
-            }
-        }, 1000);
-
-        // Simple Entrance Animation Observer
-        const observerOptions = {
-            threshold: 0.1
-        };
-
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('animate__fadeInUp');
-                    observer.unobserve(entry.target);
-                }
-            });
-        }, observerOptions);
-
-        document.querySelectorAll('.detail-item, .profile-card, .timeline-event, .grid-card').forEach(item => {
-            item.classList.add('animate__animated');
-            observer.observe(item);
-        });
-
-        // Make functions globally accessible so inline HTML click event listeners can trigger them
-        window.openInvitation = openInvitation;
-        window.toggleMusic = toggleMusic;
-        window.closeModal = closeModal;
-    </script>
-
     <script type="module">
+        // Import the functions you need from the SDKs you need
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-analytics.js";
         import { getAuth, signInAnonymously, signInWithCustomToken } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
         import { getFirestore, collection, addDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
+        // Your web app's Firebase configuration
+        // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+        const firebaseConfig = {
+          apiKey: "AIzaSyAguK5f7xQLpJ2feZ94YxW5Zexfc9A3pbk",
+          authDomain: "hanis-azizi-wedding.firebaseapp.com",
+          projectId: "hanis-azizi-wedding",
+          storageBucket: "hanis-azizi-wedding.firebasestorage.app",
+          messagingSenderId: "45521519932",
+          appId: "1:45521519932:web:3f0b9ea7b24d325b4dca39",
+          measurementId: "G-VK1M3M9STK"
+        };
+
         // Global Configuration provided by Canvas runtime or fallback to your project ID
         const appId = typeof __app_id !== 'undefined' ? __app_id : 'hanis-azizi-wedding';
-        const firebaseConfig = typeof __firebase_config !== 'undefined' 
-            ? JSON.parse(__firebase_config) 
-            : {
-                apiKey: "mock-api-key-for-preview",
-                authDomain: "hanis-azizi-wedding.firebaseapp.com",
-                projectId: "hanis-azizi-wedding",
-                storageBucket: "hanis-azizi-wedding.appspot.com",
-                messagingSenderId: "mock-sender-id",
-                appId: "mock-app-id"
-              };
 
         let db;
         let auth;
+        let analytics;
         let isFirebaseActive = false;
         let wishesCollectionRef;
         let localWishesFallback = [
@@ -1272,6 +1113,7 @@
         if (firebaseConfig.apiKey && firebaseConfig.apiKey !== "mock-api-key-for-preview") {
             try {
                 const app = initializeApp(firebaseConfig);
+                analytics = getAnalytics(app);
                 db = getFirestore(app);
                 auth = getAuth(app);
                 isFirebaseActive = true;
@@ -1286,25 +1128,18 @@
         async function startDatabase() {
             if (isFirebaseActive) {
                 try {
-                    let user;
-                    // RULE 3: Auth before any query
+                    // Cuba log masuk untuk keselamatan (sekiranya dilesenkan di Firebase Console)
                     if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
-                        const credentials = await signInWithCustomToken(auth, __initial_auth_token);
-                        user = credentials.user;
+                        await signInWithCustomToken(auth, __initial_auth_token);
                     } else {
-                        const credentials = await signInAnonymously(auth);
-                        user = credentials.user;
-                    }
-
-                    if (user) {
-                        listenToLiveWishes();
-                    } else {
-                        loadLocalWishes();
+                        await signInAnonymously(auth);
                     }
                 } catch (e) {
-                    console.error("Gagal log masuk secara tanpa nama (Firebase Auth):", e);
-                    loadLocalWishes();
+                    console.warn("Firebase Auth tidak diaktifkan, namun diteruskan terus ke Firestore:", e);
                 }
+                
+                // Teruskan membaca data Firestore (jika rules diletakkan pada 'read, write: if true')
+                listenToLiveWishes();
             } else {
                 loadLocalWishes();
             }
@@ -1312,8 +1147,6 @@
 
         // Listen for Real-Time Updates (onSnapshot)
         function listenToLiveWishes() {
-            if (!auth.currentUser) return;
-
             // RULE 2: No complex queries or limits inside onSnapshot to avoid index compilation issues
             onSnapshot(wishesCollectionRef, (snapshot) => {
                 const loadedWishes = [];
@@ -1326,6 +1159,7 @@
                 renderWishes(loadedWishes);
             }, (error) => {
                 console.error("Firestore onSnapshot error:", error);
+                // Sekiranya peraturan keselamatan menyekat akses tanpa Auth, gunakan simulasi lokal
                 loadLocalWishes();
             });
         }
@@ -1384,7 +1218,7 @@
                 timestamp: Date.now()
             };
 
-            if (isFirebaseActive && auth.currentUser) {
+            if (isFirebaseActive) {
                 try {
                     await addDoc(wishesCollectionRef, newWish);
                     showToast('Ucapan anda berjaya dihantar secara live!');
